@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+ <h1>Welcome, {{ username }}!</h1>
+
+    <form method="POST">
+        <label>Add your interest:</label><br>
+        <input type="text" name="interest" required>
+        <button type="submit">Add</button>
+    </form>
+
+  <h2>Your Interests:</h2>
+
+{% if interests %}
+  <ul>
+    {% for interest in interests %}
+      <li>
+        {{ interest }}
+        <a href="{{ url_for('resources', interest=interest) }}">
+          <button type="button">View Resources</button>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No interests saved yet.</p>
+{% endif %}
+
+    <br>
+
+  <a href="{{ url_for('interests') }}">Add More Interests</a> |
+  <a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>

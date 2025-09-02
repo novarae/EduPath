@@ -1,0 +1,103 @@
+<!-- templates/interests.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Your Interests — EduPath</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flashes">
+          {% for category, msg in messages %}
+            <div class="flash {{ category }}">{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <header class="row-between">
+      <h1>Hello, {{ username }} 👋</h1>
+      <div>
+        <a class="btn ghost" href="{{ url_for('logout') }}">Log out</a>
+      </div>
+    </header>
+
+    <section class="panel">
+      <h2>Tell us what you want to learn</h2>
+      <form method="POST">
+        <fieldset>
+          <legend>Select interests (choose one or more)</legend>
+          <label><input type="checkbox" name="interest" value="AI"> AI / Machine Learning</label>
+          <label><input type="checkbox" name="interest" value="Web Development"> Web Development</label>
+          <label><input type="checkbox" name="interest" value="Data Science"> Data Science</label>
+          <label><input type="checkbox" name="interest" value="Cybersecurity"> Cybersecurity</label>
+          <label><input type="checkbox" name="interest" value="Math"> Math</label>
+          <label><input type="checkbox" name="interest" value="Physics"> Physics</label>
+          <label><input type="checkbox" name="interest" value="Languages"> Languages</label>
+        </fieldset>
+
+        <div class="form-row">
+          <div class="col">
+            <label>Current level</label>
+            <select name="level" required>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+            </select>
+          </div>
+          <div class="col">
+            <label>Learning style</label>
+            <select name="style">
+              <option value="Video">Video</option>
+              <option value="Reading">Reading</option>
+              <option value="Practice">Practice</option>
+            </select>
+          </div>
+        </div>
+
+        <label>Optional topic (free text)</label>
+        <input name="topic" type="text" placeholder="e.g., linear regression, CSS grid">
+
+        <div style="margin-top:12px;">
+          <button class="btn" type="submit">Save Interests</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h3>Your saved interests</h3>
+      {% if saved_interests %}
+        <ul class="saved-list">
+          {% for s in saved_interests %}
+            <li>
+              <strong>{{ s['interest'] }}</strong>
+              {% if s['level'] %} — level: {{ s['level'] }}{% endif %}
+              {% if s['style'] %} — style: {{ s['style'] }}{% endif %}
+              {% if s['topic'] %} — topic: {{ s['topic'] }}{% endif %}
+              <div class="muted">Saved: {{ s['created_at'] }}</div>
+            </li>
+            <li>
+  <strong>{{ s['interest'] }}</strong>
+  {% if s['level'] %} — level: {{ s['level'] }}{% endif %}
+  {% if s['style'] %} — style: {{ s['style'] }}{% endif %}
+  {% if s['topic'] %} — topic: {{ s['topic'] }}{% endif %}
+  <div class="muted">Saved: {{ s['created_at'] }}</div>
+
+  <a class="btn small" href="{{ url_for('resources', interest=s['interest']) }}">
+    View Resources
+  </a>
+</li>
+
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="muted">No interests saved yet. Use the form above to save them.</p>
+      {% endif %}
+    </section>
+  </main>
+</body>
+</html>

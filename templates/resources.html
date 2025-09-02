@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learning Resources</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Learning Resources</h1>
+    <nav>
+      <a href="{{ url_for('dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+  </header>
+
+  <main>
+  <h2>Resources for {{ interest }}</h2>
+
+  {% if resources %}
+    <ul>
+      {% for item in resources %}
+        <li><a href="{{ item.url }}" target="_blank">{{ item.title }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No resources available for this interest yet.</p>
+  {% endif %}
+
+</main>
+
+  <footer>
+    <p>&copy; 2025 My Learning Platform. All rights reserved.</p>
+  </footer>
+</body>
+</html>

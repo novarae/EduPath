@@ -1,0 +1,43 @@
+<!-- templates/home.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EduPath — Home</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flashes">
+          {% for category, msg in messages %}
+            <div class="flash {{ category }}">{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <h1>Welcome to EduPath</h1>
+    <p>Your personalized learning path generator — create an account to get started.</p>
+
+    <div class="auth-links">
+      <a class="btn" href="{{ url_for('register') }}">Sign Up</a>
+      <a class="btn ghost" href="{{ url_for('login') }}">Log In</a>
+    </div>
+
+    <section class="info">
+      <h2>Why EduPath?</h2>
+      <ul>
+        <li>Personalized recommendations</li>
+        <li>Save your interests and come back later</li>
+        <li>Simple and user-friendly interface</li>
+        <li>Access to a community of learners</li>
+        <li>Regular updates with new content</li>
+
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
