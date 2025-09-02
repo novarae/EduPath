@@ -266,12 +266,16 @@ def resources():
     if "user_id" not in session:
         return redirect(url_for("login"))
 
-    interest = request.args.get("interest")
+    interest = request.args.get("interest", "").strip()
+    matched_interest = next((key for key in RESOURCES if key.lower() == interest.lower()), None)
+    resources = RESOURCES.get(matched_interest, [])
+
     if not interest:
         flash("No interest selected.", "warning")
         return redirect(url_for("dashboard"))
-
-    resources = RESOURCES.get(interest, [])
+    
+    matched_interest = next((key for key in RESOURCES if key.lower() == interest.lower()), None)
+    resources = RESOURCES.get(matched_interest, [])
 
     return render_template(
         "resources.html",
